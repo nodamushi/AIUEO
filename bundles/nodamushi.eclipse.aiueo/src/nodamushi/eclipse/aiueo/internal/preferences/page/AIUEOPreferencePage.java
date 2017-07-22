@@ -60,6 +60,20 @@ public class AIUEOPreferencePage
 	      new BooleanFieldEditor(KEY_DOUBLE_RELEASE_SHIFT_ALPHABET,
 	        "大文字アルファベットを入力したとき、Shiftを2回押してロック解除する",
 	        getFieldEditorParent()));
+
+	  addField(
+        new BooleanFieldEditor(KEY_REDOWN_CTRL,
+          "IMEにアルファベット入力を完了後、入力開始前のControlキーの状態に戻す",
+          getFieldEditorParent()));
+
+    addField(
+        new BooleanFieldEditor(KEY_REDOWN_SHIFT,
+          "IMEにアルファベット入力を完了後、入力開始前のShiftキーの状態に戻す",
+          getFieldEditorParent()));
+    addField(
+        new BooleanFieldEditor(KEY_REDOWN_MENU,
+          "IMEにアルファベット入力を完了後、入力開始前のMenuキーの状態に戻す",
+          getFieldEditorParent()));
 	}
 
 	/* (non-Javadoc)

@@ -26,9 +26,11 @@ public class IMEDelegate implements IIMEDelegate{
 
   private static class IMEData implements Listener{
     StyledText text;
+    IME ime;
     volatile int oldState=-1;//0:off,1:on,-1:none
-    public IMEData(StyledText t,IME ime){
+    IMEData(StyledText t,IME ime){
       text = t;
+      this.ime=ime;
       t.addDisposeListener(e->{
         if(!ime.isDisposed()){
           ime.removeListener(SWT.ImeComposition, this);
@@ -36,19 +38,37 @@ public class IMEDelegate implements IIMEDelegate{
       });
     }
 
+    void init(){
+      ime.setData(DATA_KEY,this);
+      ime.addListener(SWT.ImeComposition, this);
+      text.addListener(SWT.FocusOut, this);
+    }
+
     @Override
     public void handleEvent(Event event){
-      if(oldState!=-1){
-        long /*int*/  p = (long /*int*/)event.display.msg.lParam;
-        boolean cancel = p==0 && text.getIME().getText().length()==0;
-        if(cancel ||  (p & OS.GCS_RESULTSTR)!=0){
-          if(oldState==0){
-            closeIME(text);
+      switch(event.type){
+        case SWT.FocusOut:
+          if(oldState != -1){
+            if(oldState==0){
+              closeIME(text);
+            }
+            oldState = -1;
           }
+          break;
+        case SWT.ImeComposition:
+        if(oldState!=-1){
+          long /*int*/  p = (long /*int*/)event.display.msg.lParam;
+          boolean cancel = p==0 && text.getIME().getText().length()==0;
+          if(cancel ||  (p & OS.GCS_RESULTSTR)!=0){
+            if(oldState==0){
+              closeIME(text);
+            }
 
 
-          oldState = -1;
+            oldState = -1;
+          }
         }
+        break;
       }
     }
   }
@@ -86,8 +106,7 @@ public class IMEDelegate implements IIMEDelegate{
       Object data = ime.getData(DATA_KEY);
       if(data == null){
         IMEData imedata = new IMEData(t,ime);
-        ime.setData(DATA_KEY,imedata);
-        ime.addListener(SWT.ImeComposition, imedata);
+        imedata.init();
       }
 
       t.getDisplay().asyncExec(()->{
@@ -99,7 +118,15 @@ public class IMEDelegate implements IIMEDelegate{
         if(imedata.oldState==-1){
           return;
         }
-
+        /*
+         * bug:
+         * ループ処理が終わらないほど早くに以下のキーを離されると、
+         * プログラムがキーアップ→入力ループ→（途中でユーザによるキーアップ）→入力ループ→キーダウン
+         * となり、キーが押されたままになるという現象が発生する。
+         *
+         * どうしようね。
+         *
+         */
         boolean lctrl=keyUp(OS.VK_LCONTROL);
         boolean rctrl=keyUp(OS.VK_RCONTROL);
         boolean lmenu = keyUp(OS.VK_LMENU);
@@ -125,23 +152,29 @@ public class IMEDelegate implements IIMEDelegate{
 //          keyDown(OS.VK_SPACE);
 //          keyUp(OS.VK_SPACE);
 //        }
-        if(lctrl){
-          keyDown(OS.VK_LCONTROL);
+        if(PreferenceManager.isResetCtrlKey()){
+          if(lctrl){
+            keyDown(OS.VK_LCONTROL);
+          }
+          if(rctrl){
+            keyDown(OS.VK_RCONTROL);
+          }
         }
-        if(rctrl){
-          keyDown(OS.VK_RCONTROL);
+        if(PreferenceManager.isResetMenuKey()){
+          if(lmenu){
+            keyDown(OS.VK_LMENU);
+          }
+          if(rmenu){
+            keyDown(OS.VK_RMENU);
+          }
         }
-        if(lmenu){
-          keyDown(OS.VK_LMENU);
-        }
-        if(rmenu){
-          keyDown(OS.VK_RMENU);
-        }
-        if(lshift){
-          keyDown(OS.VK_LSHIFT);
-        }
-        if(rshift){
-          keyDown(OS.VK_RMENU);
+        if(PreferenceManager.isResetShiftKey()){
+          if(lshift){
+            keyDown(OS.VK_LSHIFT);
+          }
+          if(rshift){
+            keyDown(OS.VK_RMENU);
+          }
         }
 
       });

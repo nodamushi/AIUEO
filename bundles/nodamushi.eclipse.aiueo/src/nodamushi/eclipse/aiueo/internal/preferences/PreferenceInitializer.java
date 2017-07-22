@@ -1,14 +1,5 @@
 package nodamushi.eclipse.aiueo.internal.preferences;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_DOUBLE_RELEASE_SHIFT_ALPHABET;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_KEYBOARD;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_KEYBOARDS;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_SEND_SPACE;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_SEPARATOR;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.VALUE_DOUBLE_RELEASE_SHIFT_ALPHABET;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.VALUE_KEYBOADS;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.VALUE_KEYBOARD;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.VALUE_SEND_SPACE;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.VALUE_SEPARATOR;
+import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.*;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -26,5 +17,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer{
     store.setDefault(KEY_KEYBOARD, VALUE_KEYBOARD);
     store.setDefault(KEY_SEND_SPACE, VALUE_SEND_SPACE);
     store.setDefault(KEY_DOUBLE_RELEASE_SHIFT_ALPHABET, VALUE_DOUBLE_RELEASE_SHIFT_ALPHABET);
+    store.setDefault(KEY_REDOWN_CTRL, VALUE_REDOWN_CTRL);
+    store.setDefault(KEY_REDOWN_SHIFT, VALUE_REDOWN_SHIFT);
+    store.setDefault(KEY_REDOWN_MENU, VALUE_REDOWN_MENU);
   }
 }

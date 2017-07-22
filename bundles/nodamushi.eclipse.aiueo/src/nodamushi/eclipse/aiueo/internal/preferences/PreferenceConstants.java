@@ -14,6 +14,13 @@ public class PreferenceConstants {
   public static final String KEY_SEND_SPACE="send_space"; //$NON-NLS-1$
   /** 大文字を入力した後、shiftを2回押してロック解除する設定のPreferenceキー */
   public static final String KEY_DOUBLE_RELEASE_SHIFT_ALPHABET="shift_doubleRelease_alphabet"; //$NON-NLS-1$
+  /**文字を入力完了後、入力開始前のCTRLの状態に戻すかどうか*/
+  public static final String KEY_REDOWN_CTRL="redown.ctrl";//$NON-NLS-1$
+  /**文字を入力完了後、入力開始前のSHIFTの状態に戻すかどうか*/
+  public static final String KEY_REDOWN_SHIFT="redown.shift";//$NON-NLS-1$
+  /**文字を入力完了後、入力開始前のMENUの状態に戻すかどうか*/
+  public static final String KEY_REDOWN_MENU="redown.menu";//$NON-NLS-1$
+
 
   /**
    * 初期セパレータ設定
@@ -31,6 +38,15 @@ public class PreferenceConstants {
    * 大文字を入力した後、shiftを2回押してロック解除する初期設定
    */
   public static final boolean VALUE_DOUBLE_RELEASE_SHIFT_ALPHABET=true;
+
+  /**文字を入力完了後、入力開始前のCTRLの状態に戻すかどうか*/
+  public static final boolean VALUE_REDOWN_CTRL=false;//$NON-NLS-1$
+  /**文字を入力完了後、入力開始前のSHIFTの状態に戻すかどうか*/
+  public static final boolean VALUE_REDOWN_SHIFT=false;//$NON-NLS-1$
+  /**文字を入力完了後、入力開始前のMENUの状態に戻すかどうか*/
+  public static final boolean VALUE_REDOWN_MENU=false;//$NON-NLS-1$
+
+
 
   /**
    初期設定用JIS配列キーボード

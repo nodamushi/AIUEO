@@ -1,11 +1,6 @@
 package nodamushi.eclipse.aiueo.internal.preferences;
 
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_DOUBLE_RELEASE_SHIFT_ALPHABET;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_KEYBOARD;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_KEYBOARDS;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_SEND_SPACE;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.KEY_SEPARATOR;
-import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.VALUE_JIS_KEY_DATA;
+import static nodamushi.eclipse.aiueo.internal.preferences.PreferenceConstants.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -318,6 +313,21 @@ public class PreferenceManager{
       CACHE = config= new ReplaceConfig();
     }
     return config;
+  }
+
+  public static boolean isResetCtrlKey(){
+    IPreferenceStore p = AIUEOPlugin.getDefault().getPreferenceStore();
+    return p.getBoolean(KEY_REDOWN_CTRL);
+  }
+
+  public static boolean isResetMenuKey(){
+    IPreferenceStore p = AIUEOPlugin.getDefault().getPreferenceStore();
+    return p.getBoolean(KEY_REDOWN_MENU);
+  }
+
+  public static boolean isResetShiftKey(){
+    IPreferenceStore p = AIUEOPlugin.getDefault().getPreferenceStore();
+    return p.getBoolean(KEY_REDOWN_SHIFT);
   }
 
   static{
