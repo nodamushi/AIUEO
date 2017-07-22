@@ -8,6 +8,7 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -48,7 +49,7 @@ public abstract class ReplaceHandler{
       if(tt instanceof ITextViewer){
         ITextViewer v = (ITextViewer) tt;
         if(v.getTextWidget() == styledText){
-          Lazy.IMEDELEGATE.action(v.getTextWidget(), v.getDocument(), searchBefore);
+          Lazy.IMEDELEGATE.action(editor, searchBefore);
         }else{
           Lazy.IMEDELEGATE.action(styledText, null, searchBefore);
         }

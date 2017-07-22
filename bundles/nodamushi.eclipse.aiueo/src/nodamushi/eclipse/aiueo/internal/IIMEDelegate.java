@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorPart;
 
 public interface IIMEDelegate{
   /**
@@ -17,7 +18,9 @@ public interface IIMEDelegate{
    * @param searchBefore キャレット位置から前方向に置換するか、後ろ方向に置換するか。
    */
   void action(Control control,IDocument document,boolean searchBefore);
-
+  
+  void action(IEditorPart editor,boolean searchBefore);
+  
   /**
    * 拡張ポイントによる実装を発見する。
    * @return {@link IIMEDelegate}の実装

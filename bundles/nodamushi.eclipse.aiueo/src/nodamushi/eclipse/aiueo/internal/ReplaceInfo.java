@@ -1,5 +1,8 @@
 package nodamushi.eclipse.aiueo.internal;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -62,7 +65,6 @@ public class ReplaceInfo{
       IDocument d,
       int baseOffset,boolean searchBefore,
       ReplaceConfig configuration){
-
     final int length = d.getLength();
     if((searchBefore && baseOffset==0)
         ||(!searchBefore && length<=baseOffset)){

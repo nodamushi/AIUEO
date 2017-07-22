@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.internal.win32.INPUT;
@@ -14,8 +16,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.IME;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
 
-import nodamushi.eclipse.aiueo.internal.ReplaceInfo;
 import nodamushi.eclipse.aiueo.internal.preferences.KeyCode;
 import nodamushi.eclipse.aiueo.internal.preferences.PreferenceManager;
 import nodamushi.eclipse.aiueo.internal.preferences.PreferenceManager.ReplaceConfig;
@@ -76,25 +78,15 @@ public class IMEDelegate implements IIMEDelegate{
 
 
 
-  private static void replace(StyledText t,IDocument d,ReplaceInfo r){
+  private static void replace(StyledText t,IDocument d,ITextSelectHelper helper,ReplaceInfo r){
     if(!r.neadReplace()){
       return;
     }
 
     if(r.isSpace()){
       int pos = r.getBegin();
-      if(d!=null){
-        try {
-          d.replace(pos, 1,"　");
-          t.setCaretOffset(pos+1);
-        } catch (BadLocationException e) {
-        }
-        return;
-      }
-
-      t.replaceTextRange(pos, 1, "　");
-      t.setCaretOffset(pos+1);
-
+      helper.replaceTextRange(pos, 1, "　");
+      helper.setCaretOffset(pos+1);
       return;
     }else{
 
@@ -134,14 +126,15 @@ public class IMEDelegate implements IIMEDelegate{
         boolean lshift = keyUp(OS.VK_LSHIFT);
         boolean rshift=keyUp(OS.VK_RSHIFT);
         keyUp(OS.VK_SHIFT);
+
         if(d!=null){
           try {
             d.replace(r.getBegin(), r.getLength(), "");
           } catch (BadLocationException e) {
           }
-          t.setSelection(r.getBegin(), r.getBegin());
+          helper.setSelection(r.getBegin(),0);
         }else{
-          t.setSelection(r.getBegin(), r.getBegin()+r.getLength());
+          helper.setSelection(r.getBegin(), r.getLength());
         }
 
         ReplaceConfig info = PreferenceManager.getConfiguration();
@@ -322,21 +315,41 @@ public class IMEDelegate implements IIMEDelegate{
     action(text,null,searchBefore);
   }
 
-  public void action(StyledText text,IDocument d,boolean searchBefore){
+  public void action(StyledText text,IDocument d,ITextSelectHelper helper,boolean searchBefore){
     ReplaceInfo r;
-    int p = text.getCaretOffset();
+    
     if(d!=null){
-      r = ReplaceInfo.createReplaceInfo(d, p, searchBefore,null);
+      r = ReplaceInfo.createReplaceInfo(d, helper.getCarretOffset(), searchBefore,null);
     }else{
-      r = ReplaceInfo.createReplaceInfo(text.getText(), p, searchBefore,null);
+      r = ReplaceInfo.createReplaceInfo(text.getText(), helper.getCarretOffset(), searchBefore,null);
     }
-    replace(text, d, r);
+    replace(text, d,helper, r);
   }
 
   @Override
   public void action(Control control ,IDocument document ,boolean searchBefore){
+    ITextSelectHelper helper = ITextSelectHelper.of(control);
+    if(helper == null) {
+      return;
+    }
     if(control instanceof StyledText){
-      action((StyledText)control, document, searchBefore);
+      StyledText text = (StyledText)control;
+      action(text, document,helper, searchBefore);
     }
   }
+  
+  @Override
+  public void action(IEditorPart editor ,boolean searchBefore){
+    ITextOperationTarget t = editor.getAdapter(ITextOperationTarget.class);
+    ITextSelectHelper helper = ITextSelectHelper.of(editor);
+    if(helper == null) {
+      return;
+    }
+    if(t instanceof ITextViewer){
+      ITextViewer v = (ITextViewer) t;
+      StyledText text = v.getTextWidget();
+      action(text,v.getDocument(),helper,searchBefore);
+    }
+  }
+  
 }
