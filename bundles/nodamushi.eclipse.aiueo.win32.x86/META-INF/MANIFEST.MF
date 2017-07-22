@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Aiueo Win32
+Bundle-SymbolicName: nodamushi.eclipse.aiueo.win32.x86;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: nodamushi
+Fragment-Host: nodamushi.eclipse.aiueo
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Eclipse-PlatformFilter: (& (osgi.os=win32)(osgi.arch=x86))

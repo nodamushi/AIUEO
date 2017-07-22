@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Aiueo
+Bundle-SymbolicName: nodamushi.eclipse.aiueo;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: nodamushi.eclipse.aiueo.internal.AIUEOPlugin
+Bundle-Vendor: nodamushi
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text;bundle-version="3.11.2",
+ org.eclipse.e4.core.di;bundle-version="1.6.1",
+ org.eclipse.e4.ui.services;bundle-version="1.2.100"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
