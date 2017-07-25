@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/nodamushi.eclipse.aiueo.feature_0.1.0.qualifier.jar" id="nodamushi.eclipse.aiueo.feature" version="0.2.0.qualifier">
+   <feature url="features/nodamushi.eclipse.aiueo.feature_0.1.0.qualifier.jar" id="nodamushi.eclipse.aiueo.feature" version="0.3.1.qualifier">
       <category name="nodamushi.aiueo"/>
    </feature>
    <category-def name="nodamushi.aiueo" label="Aiueo"/>

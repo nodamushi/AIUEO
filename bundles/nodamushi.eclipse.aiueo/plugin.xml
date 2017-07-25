@@ -31,12 +31,6 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Ctrl+;">
       </key>
-      <key
-            commandId="nodamushi.eclipse.aiueo.commands.replaceBackward"
-            contextId="org.eclipse.ui.textEditorScope"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Ctrl+Shift+;">
-      </key>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

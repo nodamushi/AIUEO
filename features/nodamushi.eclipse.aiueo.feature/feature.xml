@@ -2,7 +2,7 @@
 <feature
       id="nodamushi.eclipse.aiueo.feature"
       label="Aiueo Feature"
-      version="0.2.0.qualifier"
+      version="0.3.1.qualifier"
       provider-name="nodamushi">
 
    <description>
